@@ -1,0 +1,46 @@
+.wallet-input {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.wallet-input input {
+  padding: 10px;
+  margin-right: 0; /* Remove margin between input and button */
+  border: 1px solid #ccc;
+  border-radius: 10px; /* Rounded corners on the left side */
+  width: 300px;
+  background-color: white; /* White background */
+  color: black; /* Black text */
+  height: 30px;
+}
+
+.wallet-input button {
+  padding: 8px 12px; /* Smaller padding */
+  border: 1px solid black;
+  background-color: white; /* White background */
+  color: black; /* Black text */
+  cursor: pointer;
+  border-radius: 10px; /* Rounded corners on the right side */
+  margin-left: 2px; /* Very close to each other */
+  height: 30px; /* Match the height of the input field */
+  font-size: 0.8em;
+}
+
+.wallet-input button:hover {
+  background-color: #ccc; /* Grey background on hover */
+}
+
+.warning {
+  color: red;
+  margin-top: 2px; /* Minimal margin */
+  font-size: 0.75em; /* Make the text twice smaller */
+  text-align: center;
+  height: 1em; /* Reserve space for the warning message */
+}

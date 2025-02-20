@@ -11,8 +11,9 @@ import "./App.css";
 import { mainnet } from "viem/chains";
 import { TransactionTable } from "./components/transactionTable/txTable.tsx";
 import WalletAddress from "./components/walletAddress/walletAddress.tsx";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Transaction } from "./components/transactionTable/txTable.tsx";
+import ManageTagsButton from "./components/manageTags/ManageTagsButton/manageTagsButton.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +23,6 @@ const generalConfig = {
   metadata,
 };
 
-// Create modal
 createAppKit({
   adapters: [wagmiAdapter],
   ...generalConfig,
@@ -40,10 +40,16 @@ export function App() {
     <div className={"pages"}>
       <WagmiProvider config={wagmiAdapter.wagmiConfig}>
         <QueryClientProvider client={queryClient}>
-          <h1>Wallet Viewer Web App</h1>
+          <div className="app-bar">
+            <h1>Wallet Viewer Web App</h1>
+            <ManageTagsButton address={address || ""} />
+          </div>
           {/* @ts-expect-error msg */}
           <appkit-button />
-          <WalletAddress address={address} setTransactions={setTransactions} />
+          <WalletAddress
+            address={address || ""}
+            setTransactions={setTransactions}
+          />
           <TransactionTable transactions={transactions} />
         </QueryClientProvider>
       </WagmiProvider>

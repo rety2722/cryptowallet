@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const createTagSchema = z.object({
-  body: z.object({
+  query: z.object({
     ownerId: z.string({
       required_error: "Owner ID is required",
     }),
@@ -21,7 +21,7 @@ export const params = z.object({
 
 export const updateTagSchema = z.object({
   params,
-  body: z
+  query: z
     .object({
       ownerId: z.string({
         required_error: "Owner ID is required",
@@ -37,11 +37,12 @@ export const updateTagSchema = z.object({
 });
 
 export const filterQuery = z.object({
+  ownerId: z.string(),
   limit: z.number().default(1),
   page: z.number().default(10),
 });
 
 export type ParamsInput = z.TypeOf<typeof params>;
 export type FilterQueryInput = z.TypeOf<typeof filterQuery>;
-export type CreateTagInput = z.TypeOf<typeof createTagSchema>["body"];
+export type CreateTagInput = z.TypeOf<typeof createTagSchema>["query"];
 export type UpdateTagInput = z.TypeOf<typeof updateTagSchema>;

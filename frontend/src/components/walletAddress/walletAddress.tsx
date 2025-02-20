@@ -4,7 +4,7 @@ import { Transaction } from "../transactionTable/txTable";
 import axios from "axios";
 
 interface WalletAddressProps {
-  address: string | undefined;
+  address: string;
   setTransactions: (transactions: Transaction[]) => void;
 }
 
@@ -18,7 +18,7 @@ const WalletAddress: React.FC<WalletAddressProps> = ({
   const handleUseMyAddress = () => {
     if (address) {
       setWalletAddress(address);
-      setWarning(""); // Clear any existing warning
+      setWarning("");
     } else {
       setWarning("User is not registered.");
     }
@@ -27,10 +27,10 @@ const WalletAddress: React.FC<WalletAddressProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      console.log("Wallet Address:", walletAddress);
-
       let response = await axios.get(
-        `http://localhost:8080/api/tags/transactions?walletId=${walletAddress}`,
+        `${
+          import.meta.env.VITE_BASE_SERVER_URL
+        }/tags/transactions?walletId=${walletAddress}&ownerId=${address}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -38,7 +38,6 @@ const WalletAddress: React.FC<WalletAddressProps> = ({
         }
       );
       const data: Transaction[] = response.data.data.transactions;
-      console.log("Fetched Transactions:", data);
       setTransactions(data);
     } catch (error) {
       console.error("Error fetching transactions:", error);
@@ -49,7 +48,7 @@ const WalletAddress: React.FC<WalletAddressProps> = ({
     if (warning) {
       const timer = setTimeout(() => {
         setWarning("");
-      }, 3000); // Warning disappears after 3 seconds
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [warning]);

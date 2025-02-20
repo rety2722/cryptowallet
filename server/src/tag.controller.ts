@@ -8,11 +8,13 @@ import {
 } from "./tag.schema";
 
 export const createTagController = async (
-  req: Request<{}, {}, CreateTagInput>,
+  req: Request<CreateTagInput>,
   res: Response
 ) => {
   try {
-    const { ownerId, walletId, tag } = req.body;
+    const ownerId = req.query.ownerId;
+    const walletId = req.query.walletId;
+    const tag = req.query.tag;
 
     const check = await TagModel.findAll({
       where: {
@@ -56,24 +58,24 @@ export const createTagController = async (
 };
 
 export const updateTagController = async (
-  req: Request<UpdateTagInput["params"], {}, UpdateTagInput["body"]>,
+  req: Request<UpdateTagInput["params"], {}, UpdateTagInput["query"]>,
   res: Response
 ) => {
   try {
-    const result = await TagModel.update(
-      { ...req.body, updatedAt: Date.now() },
+    await TagModel.update(
+      { ...req.query, updatedAt: Date.now() },
       {
         where: {
-          walletId: req.params.walletId,
-          ownerId: req.params.ownerId,
+          walletId: req.query.walletId,
+          ownerId: req.query.ownerId,
         },
       }
     );
 
     const tags = await TagModel.findAll({
       where: {
-        walletId: req.params.walletId,
-        ownerId: req.params.ownerId,
+        walletId: req.query.walletId,
+        ownerId: req.query.ownerId,
       },
     });
 
@@ -98,8 +100,8 @@ export const findTagController = async (
   try {
     const tags = await TagModel.findOne({
       where: {
-        walletId: req.params.walletId,
-        ownerId: req.params.ownerId,
+        walletId: req.query.walletId,
+        ownerId: req.query.ownerId,
       },
     });
 
@@ -154,7 +156,7 @@ export const deleteTagController = async (
 ) => {
   try {
     const result = await TagModel.destroy({
-      where: { ownerId: req.params.ownerId, walletId: req.params.walletId },
+      where: { ownerId: req.query.ownerId, walletId: req.query.walletId },
       force: true,
     });
 

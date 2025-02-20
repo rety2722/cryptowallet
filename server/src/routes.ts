@@ -15,12 +15,12 @@ const router = express.Router();
 router
   .route("/")
   .get(findAllTagsController)
-  .post(validate(createTagSchema), createTagController);
+  .post(validate(createTagSchema), createTagController)
+  .delete(deleteTagController);
 router
   .route("/tags/:ownerId/:walletId")
   .get(validate(updateTagSchema), findTagController)
-  .patch(validate(updateTagSchema), updateTagController)
-  .delete(deleteTagController);
+  .patch(validate(updateTagSchema), updateTagController);
 router.route("/transactions").get(getTransactions);
 
 export default router;

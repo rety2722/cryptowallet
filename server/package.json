@@ -19,6 +19,8 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
+    "@sequelize/core": "^7.0.0-alpha.45",
+    "@sequelize/sqlite3": "^7.0.0-alpha.45",
     "axios": "^1.7.9",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",

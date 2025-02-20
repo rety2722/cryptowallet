@@ -1,0 +1,14 @@
+.manage-tags-button {
+    border: 1px solid black;
+    background-color: white; /* White background */
+    color: black; /* Black text */
+    cursor: pointer;
+    border-radius: 10px; /* Circular borders */
+    height: 40px; /* Match the height of the input field */
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .manage-tags-button:hover {
+    background-color: #ccc; /* Grey background on hover */
+  }

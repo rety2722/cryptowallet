@@ -12,6 +12,7 @@ export const replyTransactionParams = z.object({
 });
 
 export const inputParams = z.object({
+  ownerId: z.string(),
   limit: z.number().default(15),
   walletId: z.string(),
   depth: z.number().default(100000),

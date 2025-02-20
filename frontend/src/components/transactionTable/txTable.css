@@ -1,16 +1,16 @@
 .transaction-table-container {
     width: 100%;
-    margin: 20px auto;
+    margin: 0px auto;
     text-align: center;
   }
   
   .table-wrapper {
-    overflow-x: auto; /* Add horizontal scroll */
-    width: 100%; /* Ensure the wrapper takes full width */
+    overflow-x: auto; 
+    width: 100%; 
   }
   
   .transaction-table {
-    width: 100%; /* Ensure the table takes full width */
+    width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
   }
@@ -19,11 +19,11 @@
   .transaction-table td {
     border: 1px solid #ddd;
     padding: 8px;
-    width: 25%; /* Set each column to take up 25% of the table width */
-    white-space: nowrap; /* Prevent text from wrapping */
-    overflow: hidden; /* Hide overflow */
-    text-overflow: ellipsis; /* Add ellipsis for overflow text */
-    cursor: pointer; /* Change cursor to pointer on hover */
+    width: 25%; 
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    cursor: pointer; 
     height: 40px;
   }
   
@@ -40,31 +40,6 @@
     background-color: #ddd;
   }
   
-  .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .pagination button {
-    padding: 10px 20px;
-    margin: 0 10px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .pagination button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  .pagination span {
-    margin: 0 10px;
-  }
-  
-  /* Modal styles */
   .modal {
     display: flex;
     justify-content: center;

@@ -12,35 +12,35 @@
 
 .wallet-input input {
   padding: 10px;
-  margin-right: 0; /* Remove margin between input and button */
+  margin-right: 0; 
   border: 1px solid #ccc;
-  border-radius: 10px; /* Rounded corners on the left side */
+  border-radius: 10px; 
   width: 300px;
-  background-color: white; /* White background */
-  color: black; /* Black text */
+  background-color: white;
+  color: black;
   height: 30px;
 }
 
 .wallet-input button {
-  padding: 8px 12px; /* Smaller padding */
+  padding: 8px 12px; 
   border: 1px solid black;
-  background-color: white; /* White background */
-  color: black; /* Black text */
+  background-color: white; 
+  color: black; 
   cursor: pointer;
-  border-radius: 10px; /* Rounded corners on the right side */
-  margin-left: 2px; /* Very close to each other */
-  height: 30px; /* Match the height of the input field */
+  border-radius: 10px; 
+  margin-left: 2px; 
+  height: 30px; 
   font-size: 0.8em;
 }
 
 .wallet-input button:hover {
-  background-color: #ccc; /* Grey background on hover */
+  background-color: #ccc; 
 }
 
 .warning {
   color: red;
-  margin-top: 2px; /* Minimal margin */
-  font-size: 0.75em; /* Make the text twice smaller */
+  margin-top: 2px; 
+  font-size: 0.75em; 
   text-align: center;
-  height: 1em; /* Reserve space for the warning message */
+  height: 1em; 
 }

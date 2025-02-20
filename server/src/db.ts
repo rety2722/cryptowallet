@@ -5,7 +5,10 @@ const DB_URL = process.env.DATABASE_URL;
 if (!DB_URL) {
   throw new Error("DATABASE_URL is not defined");
 }
-const sequelize = new Sequelize(DB_URL);
+const sequelize = new Sequelize("cryptowallet", "", "", {
+  dialect: "sqlite",
+  storage: DB_URL,
+});
 
 async function connectDB() {
   try {

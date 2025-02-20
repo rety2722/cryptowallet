@@ -7,7 +7,7 @@ import {
   ResponseTransactionSchema,
 } from "./tx.schema";
 import axios from "axios";
-import CryptoJS from "crypto-js";
+import TagModel from "./model";
 
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 
@@ -16,6 +16,7 @@ export const getTransactions = async (
   res: Response
 ) => {
   try {
+    const ownerId = req.query.ownerId || "";
     const walletId = req.query.walletId;
     const limit = Number(req.query.limit) || 15;
 
@@ -37,9 +38,38 @@ export const getTransactions = async (
             .then((response) => {
               return response.data.result;
             });
+          if (
+            result.length > 0 &&
+            result[result.length - 1].hash === tx_data.hash
+          ) {
+            continue;
+          }
+
+          const tx_dataTagFrom: string | null = await TagModel.findOne({
+            where: {
+              walletId: tx_data.from,
+              ownerId: ownerId,
+            },
+          }).then((res) => {
+            return res ? res.getDataValue("tag") : null;
+          });
+          if (tx_dataTagFrom !== null) {
+            tx_data.from = tx_dataTagFrom;
+          }
+
+          const tx_dataTagTo: string | null = await TagModel.findOne({
+            where: {
+              walletId: tx_data.to,
+              ownerId: ownerId,
+            },
+          }).then((res) => {
+            return res ? res.getDataValue("tag") : null;
+          });
+          if (tx_dataTagTo !== null) {
+            tx_data.to = tx_dataTagTo;
+          }
+
           result.push(tx_data);
-          tx_data.key = CryptoJS.SHA256(JSON.stringify(tx_data));
-          console.log(tx_data.key);
         }
         return result;
       });

@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["*"],
     credentials: true,
   })
 );
@@ -33,11 +33,10 @@ app.all("*", (req: Request, res: Response) => {
   });
 });
 
-const PORT = 8080;
-app.listen(PORT, async () => {
-  console.log("🚀Server started Successfully");
+app.listen(process.env.PORT, async () => {
+  console.log("server started Successfully");
   await connectDB();
   sequelize.sync({ force: false }).then(() => {
-    console.log("✅Synced database successfully...");
+    console.log("Synced database successfully...");
   });
 });

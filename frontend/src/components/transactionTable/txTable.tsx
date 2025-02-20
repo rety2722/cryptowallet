@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./txTable.css"; // Import the CSS file for styling
+import TxCell from "./txCell";
+import PageNavigation from "./PageNavigation/pageNavigation";
 
 export interface Transaction {
-  key: string;
   hash: string;
   from: string;
   to: string;
@@ -29,9 +30,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
       if (i >= transactions.length) {
         break;
       }
-      if (i > 0 && transactions[i].hash === transactions[i - 1].hash) {
-        continue;
-      }
+      // assume server sends different transactions
       newRecords.push(transactions[i]);
     }
     console.log("New Records:", newRecords);
@@ -50,11 +49,6 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
-  };
-
-  const truncate = (str: string, n: number) => {
-    str = str || "";
-    return str.length > n ? str.substr(0, n) + "..." : str;
   };
 
   const handleCellClick = (content: string) => {
@@ -82,32 +76,24 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
           <tbody>
             {currentRecords.map((transaction) => (
               <tr
-                key={typeof transaction === "undefined" ? "" : transaction.key}
+                key={typeof transaction === "undefined" ? "" : transaction.hash}
               >
-                <td onClick={() => handleCellClick(transaction.hash)}>
-                  {truncate(
-                    typeof transaction === "undefined" ? "" : transaction.hash,
-                    10
-                  )}
-                </td>
-                <td onClick={() => handleCellClick(transaction.from)}>
-                  {truncate(
-                    typeof transaction === "undefined" ? "" : transaction.from,
-                    10
-                  )}
-                </td>
-                <td onClick={() => handleCellClick(transaction.to)}>
-                  {truncate(
-                    typeof transaction === "undefined" ? "" : transaction.to,
-                    10
-                  )}
-                </td>
-                <td onClick={() => handleCellClick(transaction.value)}>
-                  {truncate(
-                    typeof transaction === "undefined" ? "" : transaction.value,
-                    10
-                  )}
-                </td>
+                <TxCell
+                  content={transaction.hash}
+                  onClick={() => handleCellClick(transaction.hash)}
+                />
+                <TxCell
+                  content={transaction.from}
+                  onClick={() => handleCellClick(transaction.from)}
+                />
+                <TxCell
+                  content={transaction.to}
+                  onClick={() => handleCellClick(transaction.to)}
+                />
+                <TxCell
+                  content={transaction.value}
+                  onClick={() => handleCellClick(transaction.value)}
+                />
               </tr>
             ))}
             {Array.from({ length: emptyRows }).map((_, index) => (
@@ -121,17 +107,13 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
           </tbody>
         </table>
       </div>
-      <div className="pagination">
-        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-          Previous
-        </button>
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-          Next
-        </button>
-      </div>
+
+      <PageNavigation
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPreviousPage={handlePreviousPage}
+        onNextPage={handleNextPage}
+      />
       {modalContent && (
         <div className="modal" onClick={closeModal}>
           <div className="modal-content">

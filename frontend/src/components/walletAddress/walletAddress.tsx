@@ -14,6 +14,7 @@ const WalletAddress: React.FC<WalletAddressProps> = ({
 }) => {
   const [warning, setWarning] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleUseMyAddress = () => {
     if (address) {
@@ -26,6 +27,7 @@ const WalletAddress: React.FC<WalletAddressProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       let response = await axios.get(
         `${
@@ -41,6 +43,8 @@ const WalletAddress: React.FC<WalletAddressProps> = ({
       setTransactions(data);
     } catch (error) {
       console.error("Error fetching transactions:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,21 +58,27 @@ const WalletAddress: React.FC<WalletAddressProps> = ({
   }, [warning]);
 
   return (
-    <form className="wallet-input" onSubmit={handleSubmit}>
-      <div className="input-group">
-        <input
-          type="text"
-          value={walletAddress}
-          onChange={(e) => setWalletAddress(e.target.value)}
-          placeholder="Enter wallet address"
-        />
-        <button type="button" onClick={handleUseMyAddress}>
-          Use My Address
-        </button>
-        <button type="submit">Send</button>
-      </div>
-      <div className="warning">{warning}</div>
-    </form>
+    <div>
+      {loading && <div className="loading-screen">Loading...</div>}
+      <form className="wallet-input" onSubmit={handleSubmit}>
+        <div className="input-group">
+          <input
+            type="text"
+            value={walletAddress}
+            onChange={(e) => setWalletAddress(e.target.value)}
+            placeholder="Enter wallet address"
+            disabled={loading}
+          />
+          <button type="button" onClick={handleUseMyAddress} disabled={loading}>
+            Use My Address
+          </button>
+          <button type="submit" disabled={loading}>
+            Send
+          </button>
+        </div>
+        <div className="warning">{warning}</div>
+      </form>
+    </div>
   );
 };
 

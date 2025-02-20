@@ -26,5 +26,4 @@ export type ResponseTransactionSchema = z.TypeOf<
   typeof ResponseTransactionParams
 >;
 export type InputTransactionSchema = z.TypeOf<typeof inputParams>;
-export type ReplyTransactionSchema = z.TypeOf<typeof replyTransactionParams>;
 export type TransactionSchema = z.TypeOf<typeof transactionParams>;

@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import TagModel from "./model";
+import TagModel from "../models/tagModel";
 import {
   CreateTagInput,
   FilterQueryInput,
   ParamsInput,
   UpdateTagInput,
-} from "./tag.schema";
+} from "../schemas/tag.schema";
 
 export const createTagController = async (
   req: Request<CreateTagInput>,

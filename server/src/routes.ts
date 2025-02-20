@@ -6,9 +6,9 @@ import {
   findAllTagsController,
   findTagController,
   updateTagController,
-} from "./tag.controller";
-import { createTagSchema, updateTagSchema } from "./tag.schema";
-import { getTransactions } from "./tx.controller";
+} from "./controllers/tag.controller";
+import { createTagSchema, updateTagSchema } from "./schemas/tag.schema";
+import { getTransactions } from "./controllers/tx.controller";
 
 const router = express.Router();
 

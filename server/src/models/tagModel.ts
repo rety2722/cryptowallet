@@ -1,4 +1,4 @@
-import { sequelize, DataTypes } from "./db";
+import { sequelize, DataTypes } from "../db";
 
 const TagModel = sequelize.define("tags", {
   ownerId: {

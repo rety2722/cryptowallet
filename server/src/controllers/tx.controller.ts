@@ -1,15 +1,15 @@
 require("dotenv").config();
-import { Request, response, Response } from "express";
+import { Request, Response } from "express";
 import {
   TransactionSchema,
-  ReplyTransactionSchema,
   InputTransactionSchema,
   ResponseTransactionSchema,
-} from "./tx.schema";
+} from "../schemas/tx.schema";
 import axios from "axios";
-import TagModel from "./model";
+import TagModel from "../models/tagModel";
 
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
+const ETHERSCAN_BASE_URL = process.env.ETHERSCAN_BASE_URL;
 
 export const getTransactions = async (
   req: Request<InputTransactionSchema, {}>,
@@ -22,7 +22,7 @@ export const getTransactions = async (
 
     const transactions = await axios
       .get(
-        `https://api.etherscan.io/api?module=logs&action=getLogs&address=${walletId}&page=1&apikey=${ETHERSCAN_API_KEY}`
+        `${ETHERSCAN_BASE_URL}?module=logs&action=getLogs&address=${walletId}&page=1&apikey=${ETHERSCAN_API_KEY}`
       )
       .then(async (response): Promise<TransactionSchema[]> => {
         let result: TransactionSchema[] = [];
@@ -33,7 +33,7 @@ export const getTransactions = async (
         for (let i = 0; i < arr.length; i++) {
           let tx_data = await axios
             .get(
-              `https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=${arr[i].transactionHash}&apikey=${ETHERSCAN_API_KEY}`
+              `${ETHERSCAN_BASE_URL}?module=proxy&action=eth_getTransactionByHash&txhash=${arr[i].transactionHash}&apikey=${ETHERSCAN_API_KEY}`
             )
             .then((response) => {
               return response.data.result;

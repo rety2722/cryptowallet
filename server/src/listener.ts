@@ -9,10 +9,8 @@ const ETHERSCAN_BASE_URL = process.env.ETHERSCAN_BASE_URL;
 const { Web3 } = require("web3");
 const web3 = new Web3(INFURA_URL);
 
-export const handleMessage = async (
-  ws: WebSocket,
-  message: { walletId: string; ownerId: string }
-) => {
+export const handleMessage = async (ws: WebSocket, message: any) => {
+  console.log("Message received:", message);
   const walletId = message.walletId;
   const ownerId = message.ownerId;
   console.log("Connected to client!");
@@ -21,7 +19,7 @@ export const handleMessage = async (
   const sub = await web3.eth.subscribe("logs", { address: walletId });
 
   sub.on("data", async function (blockHeader: any) {
-    console.log("Block Header: ", blockHeader);
+    console.log("Block Header txhash: ", blockHeader.transactionHash);
     const tx_data = await axios
       .get(
         `${ETHERSCAN_BASE_URL}?module=proxy&action=eth_getTransactionByHash&txhash=${blockHeader.transactionHash}&apikey=${ETHERSCAN_API_KEY}`
@@ -59,9 +57,11 @@ export const handleMessage = async (
   });
 
   console.log("Received message:", message);
+  return false;
 };
 
 export const handleDisconnect = (ws: WebSocket) => {
   web3.eth.clearSubscriptions();
   console.log("Disconnected from client!");
+  return false;
 };

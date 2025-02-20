@@ -4,21 +4,8 @@ import morgan from "morgan";
 import cors from "cors";
 import { connectDB, sequelize } from "./db";
 import tagRouter from "./routes";
+import { app } from "./app";
 import express from "express";
-import http from "http";
-import WebSocket from "ws";
-import axios from "axios";
-import TagModel from "./models/tagModel";
-import { handleDisconnect, handleMessage } from "./listener";
-
-const app = express();
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
-
-wss.on("connection", (ws: WebSocket) => {
-  ws.on("message", handleMessage);
-  ws.on("close", handleDisconnect);
-});
 
 app.use(express.json({ limit: "10kb" }));
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
